@@ -14,18 +14,22 @@
   percentage: 95
   color: info
 
+- name: Complexity analysis
+  percentage: 94
+  color: info
+
 - name: Functional Programming
   percentage: 90
   color: info
 
 - name: Concurrent programming and multithreading
-  percentage: 85
-  color: info
-
-- name: Design patterns
-  percentage: 80
+  percentage: 88
   color: info
 
 - name: Test-Driven Development
+  percentage: 83
+  color: info
+
+- name: Design patterns
   percentage: 80
   color: info

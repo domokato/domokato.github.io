@@ -86,7 +86,7 @@ At almost 30 lines, it's starting to get long, but for now it remains readable e
 
 I extended the Approval Voting system, which allows voters to approve ("OK") multiple candidates -- the winner being the candidate with the most OKs.
 For Bite Ballot, vetoes and prefers are also available.
-Then, when voting is complete, for each candidate that has at least one OK or prefer vote:
+Then, when voting is complete, these steps are performed:
 
 1. Filter the candidates with the least number of vetoes.
 2. If there are ties, filter the ones with the most number of prefers.
@@ -95,7 +95,7 @@ Then, when voting is complete, for each candidate that has at least one OK or pr
 
 This ensures one restaurant always wins and that everyone's preferences are accounted for fairly.
 
-The code I write reads as close to its description as possible:
+The code I wrote for this reads as close to its description as possible:
 
 ```python
 def _calculate_finalists(candidate_vote_counts: dict, ballot_result: BallotResult) -> list[Restaurant]:
@@ -163,5 +163,5 @@ Market research, design, engineering, QA, marketing: Me
 Special thanks to my early testers: Nhi Tu, Timothy Villanueva, Ajani Spicer-grose, Yichen Wang, Brendan Wolf, PJ Quesada, Alexandra Chua, Josh Beck
 
 <p class="text-center">
-{% include elements/button.html link="https://www.biteballot.app" text="Bite Ballot" %}
+{% include elements/button.html link="https://www.biteballot.app" text="Visit Bite Ballot" %}
 </p>

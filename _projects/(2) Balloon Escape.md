@@ -16,7 +16,7 @@ If you run out of one or the other, you may land to refill before continuing on.
 
 ![smoke]({{ site.baseurl }}/assets/image/balloon_escape_smoke.jpg)
 
-Be careful, though. Land too hard, and you'll crash. Hit a patch of bad weather, and you may build up static electricity that could cause an explosion.
+Be careful, though. Land too hard, and you'll crash. Hit a patch of bad weather, and you might build up static electricity that could cause an explosion.
 
 Along the way, you'll find items and allies to help you. A trail rope that coils up on the ground as you descend will soften your landing.
 And your cat, Atticus, can help drag you by the rope towards your target.
@@ -42,8 +42,8 @@ This game is implemented in Unity using C#. It builds on Unity's 2D physics engi
 
 #### Async/await
 
-To avoid "callback hell" and ensure flat, unnested, and thus more readable and maintainable code, `async/await` was employed when waiting for asynchronous operations such as animations, user input, or game events.
-This was especially useful during tutorials, which had plenty of these. The entire liftoff tutorial can be written into a single function and read simply from top to bottom:
+To avoid "callback hell" and ensure flat, unnested, and thus more readable and maintainable code, `async/await` was employed when scripting sequences containing animations, user input, or game events.
+This was especially useful during tutorials, which had plenty of these. The entire liftoff tutorial was able to be written in a single, flat function and read simply from top to bottom:
 
 ```csharp
 protected override async UniTask OnRun(CancellationToken cancellationToken)

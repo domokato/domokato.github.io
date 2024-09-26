@@ -1,5 +1,8 @@
 - name: Archery
-  percentage: 90
+  percentage: 88
+
+- name: Chess
+  percentage: 86
 
 - name: Singing
   percentage: 80

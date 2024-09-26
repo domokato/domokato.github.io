@@ -11,7 +11,7 @@ Hi I am **{{ site.author.name }}** :wave:, a software engineer with over 15 year
 
 I specialize in writing thoroughly-tested, idiomatic code with minimal bugs that is short, organized, and readable, ensuring that anyone else who works on it in the future can maintain a high velocity without getting confused and creating more bugs. But I'm also flexible. For throwaway prototypes, I know how to write fast and messy code to get the job done quick.
 
-With me on the team, your product will be performant, stable, and easy to extend.
+With me on the team, your software will be performant, stable, and easy to extend.
 
 <div class="row">
 {% include about/skills.html title="Programming languages" source=site.data.programming-languages %}
