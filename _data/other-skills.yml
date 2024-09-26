@@ -1,0 +1,26 @@
+- name: Archery
+  percentage: 90
+
+- name: Singing
+  percentage: 80
+
+- name: Parkour
+  percentage: 78
+
+- name: Screenwriting
+  percentage: 77
+
+- name: Music production
+  percentage: 75
+
+- name: Piano
+  percentage: 70
+
+- name: Guitar
+  percentage: 65
+
+- name: Rock Climbing
+  percentage: 60
+
+- name: Brazilian Jiu Jitsu
+  percentage: 15
