@@ -1,0 +1,31 @@
+- name: Stable code
+  percentage: 98
+  color: info
+
+- name: Clean code
+  percentage: 97
+  color: info
+
+- name: Agile
+  percentage: 96
+  color: info
+
+- name: Object-Oriented Programming
+  percentage: 95
+  color: info
+
+- name: Functional Programming
+  percentage: 90
+  color: info
+
+- name: Concurrent programming and multithreading
+  percentage: 85
+  color: info
+
+- name: Design patterns
+  percentage: 80
+  color: info
+
+- name: Test-Driven Development
+  percentage: 80
+  color: info
