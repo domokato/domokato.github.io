@@ -1,3 +1,7 @@
+- name: Clojure
+  percentage: 90
+  color: danger
+
 - name: HTML5/CSS3
   percentage: 90
   color: danger

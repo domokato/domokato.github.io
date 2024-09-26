@@ -12,16 +12,17 @@ description: Easily elect the best restaurant for your group.
 
 A seemingly simple web app for voting on where to eat. But you'll find a rich set of features exactly when you need them.
 
-- Need to invite someone to your ballot over a messaging app? Send them the invite link.
-- Want to invite someone in person? Have them scan the QR code.
-- Need to see what ballot options others are adding? Ballots update in real-time.
-- Hate long sign-up processes or giving away your email address? Sign-up isn't required.
-- Someone forgot to submit their votes? Move to end voting, and have someone second it.
-- Worried about voters not seeing options others added after they already voted? Set an end time so voters know when to check back.
+- Need to invite someone to your ballot over a messaging app? <strong>Send them the invite link.</strong>
+- Want to invite someone in person? <strong>Have them scan the QR code.</strong>
+- Need to see what ballot options others are adding? <strong>Ballots update in real-time.</strong>
+- Someone forgot to submit their votes? <strong>Move to end voting, and have someone second it.</strong>
+- Yada yada yada.
 
 ![qrcode]({{ site.baseurl }}/assets/image/qrcode.png)
 
 ## UX for joining a ballot
+
+This is going to get complicated. So bear with me, or skip ahead to the code.
 
 There are many possible situations that can happen when a person visits a join link, and they each need to be handled differently.
 This creates complexity in the logic of the app in exchange for a smooth user experience.
@@ -42,6 +43,43 @@ If, on the other hand, they're trying to join an active ballot, these cases are 
 
 ![joining_previous_results]({{ site.baseurl }}/assets/image/joining_previous_results.png)
 
+Phew, that was a lot! Despite the complexity, I was able to keep the code relatively simple, utilizing just a couple unnested if-statements.
+Here's the entire `/join-ballot` handler:
+
+```python
+@appb.route('/join-ballot/<ballot_id>')
+def join_ballot(ballot_id):
+    ballot_uuid = uuid.UUID(ballot_id)
+    ballot_join_url = ballot_service.get_join_url(ballot_id)
+    device = get_device()
+
+    if not ballot_service.is_ballot_active(ballot_uuid) or not device:
+        can_join = ballot_service.is_ballot_active(ballot_uuid)
+        return render_template('index.html.jinja',
+                               in_join_flow=True,
+                               ballot_join_url=ballot_join_url if can_join else None,
+                               alert_cant_join=not can_join,
+                               no_user=not device)
+
+    user: User = device.user
+
+    join_confirmed = request.args.get('join_confirmed')
+    if join_confirmed:
+        ballot_service.join_ballot(ballot_uuid, user)
+        response = Response()
+        response.headers['HX-Redirect'] = url_for('appb.index')
+        return response
+
+    return render_template('index.html.jinja',
+                           in_join_flow=True,
+                           ballot_join_url=ballot_join_url,
+                           already_in=user.current_ballot.id == ballot_uuid,
+                           warn_join=ballot_service.is_ballot_active(user.current_ballot.id),
+                           in_ballot_result=user.current_ballot and user.current_ballot.result)
+```
+
+At almost 30 lines, it's starting to get long, but for now it remains readable enough.
+
 ## The voting algorithm
 
 ![voting]({{ site.baseurl }}/assets/image/screenshot_voting.png)
@@ -57,9 +95,32 @@ Then, when voting is complete, for each candidate that has at least one OK or pr
 
 This ensures one restaurant always wins and that everyone's preferences are accounted for fairly.
 
+The code I write reads as close to its description as possible:
+
+```python
+def _calculate_finalists(candidate_vote_counts: dict, ballot_result: BallotResult) -> list[Restaurant]:
+    """
+    Filters the least-vetoed options. Then filters the most-preferred options.
+    Then filters the most-okayed options. What's left are the finalists.
+    :return: A list of the finalists.
+    """
+    least_vetoed_restaurants = _filter_restaurants(candidate_vote_counts, min, VoteType.VETO)
+    ballot_result.least_vetoed = [restaurant.name for restaurant in least_vetoed_restaurants.keys()]
+
+    most_preferred_restaurants = _filter_restaurants(least_vetoed_restaurants, max, VoteType.PREFERRED)
+    ballot_result.most_preferred = [restaurant.name for restaurant in most_preferred_restaurants.keys()]
+
+    most_okayed_restaurants = _filter_restaurants(most_preferred_restaurants, max, VoteType.OKAY)
+    ballot_result.most_okayed = [restaurant.name for restaurant in most_okayed_restaurants.keys()]
+
+    return list(most_okayed_restaurants.keys())
+```
+
+And here's how the results are displayed to the user:
+
 ![ballot_results]({{ site.baseurl }}/assets/image/ballot_results.png)
 
-## Implementation
+## Software design
 
 Bite Ballot was designed to operate as a single-page app (SPA). To ensure rapid development and a minimal codebase for the required functionality, lightweight frameworks and libraries were chosen.
 Flask was chosen over Django. HTMx + hyperscript was chosen over React.
@@ -73,8 +134,8 @@ This new HTML, which contained controls that could send further requests, would 
 #### Long polling
 
 Long polling was used as a simple method for the frontend to receive real-time updates from the backend without having to use web sockets.
-This is distinct from traditional polling where a request is made at regular intervals and the backend responds immediately.
-In long polling, the connection to the server is kept open for long periods.
+This is distinct from traditional polling where an HTTP request is made at regular intervals and the backend responds immediately.
+In long polling, the HTTP connection to the server is kept open for long periods.
 Then, when another voter updates your ballot, say by adding a ballot option, the backend is able to immediately respond to your long-poll request with the updated ballot.
 
 If, on the other hand, no changes are made within a certain timeout, the backend just responds with a 204 (no content), and the frontend starts another long poll request.
