@@ -1,6 +1,6 @@
 ---
 name: Bite Ballot
-tools: [Python, Flask, PostgreSQL, SQLAlchemy, HTMx, hyperscript, HTML, JavaScript, jinja]
+tools: [Python, Flask, PostgreSQL, SQLAlchemy, HTMx, hyperscript, HTML, CSS, JavaScript, jinja]
 image: https://cdn-b.saashub.com/images/app/screenshots/246/ieaz40q4t2zk/other-original.PNG
 description: Easily elect the best restaurant for your group.
 # external_url: https://www.biteballot.app
