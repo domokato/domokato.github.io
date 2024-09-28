@@ -33,7 +33,7 @@ For demonstration purposes, the trend line here ignores the last four days of da
 I tried two different extrapolation methods for the task completion rate:
 
 #1. Line of best fit<br>
-#2. Line from (0, start date) directly to (# tasks completed, today)
+#2. Line passing through (0, start date) and (# tasks completed, today)
 
 For the task addition rate, in addition to the above, I tried a dead-simple third method:
 
