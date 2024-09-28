@@ -14,15 +14,17 @@ To improve its accuracy, you'll have to dig around in the code to get familiar w
 At that point, half the task is already done and you might as well do the other half -- the actual implementation.
 Unfortunately, you'll probably have other tasks to estimate as well. So instead, you'll have to context-switch away and context-switch back later, burning valuable time and energy.
 
+![computer_frustration]({{ site.baseurl }}/assets/image/computer_frustration.jpg)
+
 ## What if I told you...
 
 There's a better way. Milestones are usually broken down into similarly-sized tasks.
 If we just get a few days into a milestone, we can plot a trend line for the task completion rate and compare it against the total number of tasks.
 Where the trend line crosses the total number of tasks, the milestone is projected to be completed.
-This method turns out to be surprisingly accurate, even if tasks are added mid-development, which is practically a certainty.
+This method turns out to be surprisingly accurate, even if tasks are added mid-milestone, which is practically a certainty.
 
 Here's a plot of an actual completed milestone my team at Lumanu worked on.
-The trend line ignores the data of the last four days, and we see that it's fairly close to predicting the actual completion date.
+For demonstration purposes, the trend line here ignores the last four days of data, and we see that it predicts the completion date accurately in this case.
 
 ![milestone_completion_projection]({{ site.baseurl }}/assets/image/milestone_completion_projection.png)
 
@@ -45,9 +47,10 @@ Then I made a sort of "error bar graph" of the results. And I repeated this for 
 ![milestone_completion_projection_errors]({{ site.baseurl }}/assets/image/milestone_completion_projection_errors.png)
 
 Early on in the milestone, the projections are not very accurate, but about halfway through, the errors become quite small.
+This is pretty good considering the inconsistent task addition and completion rate throughout this milestone.
 
 ## Conclusion
 
-Engineers tend to underestimate the time it takes to complete tasks, causing deadlines -- which are based on those estimates -- to slip often.
+Engineers tend to underestimate the time it takes to complete tasks, causing deadlines, which are based on those estimates, to slip often.
 Instead, we can just look at the actual time they take to complete the tasks and project a completion date based on that.
 This both saves engineers' time and is more accurate 💪.
